@@ -1,0 +1,1 @@
+# NRC20-Locked-Token
