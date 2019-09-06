@@ -138,7 +138,7 @@ public class SimpleToken implements Contract, Token {
      */
     public boolean transferLocked(@Required Address to, @Required BigInteger value,@Required long lockedTime){
         subtractBalance(Msg.sender(), value);
-        if(Block.timestamp()>lockedTime){
+        if(Block.timestamp()>=lockedTime){
             addBalance(to, value);
         }else{
             //锁定中......
@@ -253,7 +253,7 @@ public class SimpleToken implements Contract, Token {
             Iterator<Long> iter=lockedBalance.keySet().iterator();
             while (iter.hasNext()){
                 long lockedTime=iter.next();
-                if(currentTime>lockedTime){
+                if(currentTime>=lockedTime){
                     BigInteger availBalance=lockedBalance.get(lockedTime);
                     BigInteger balance = balances.get(address);
                     if (balance == null) {
