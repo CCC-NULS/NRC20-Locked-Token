@@ -6,7 +6,6 @@ import io.nuls.contract.sdk.Contract;
 import io.nuls.contract.sdk.Msg;
 import io.nuls.contract.sdk.annotation.Required;
 import io.nuls.contract.sdk.annotation.View;
-import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.math.BigInteger;
 import java.util.HashMap;
@@ -286,33 +285,4 @@ public class SimpleToken implements Contract, Token {
         check(value2);
         require(value1.compareTo(value2) >= 0, msg);
     }
-
-    @View
-    public long getTimeForTest(){
-        return Block.timestamp();
-    }
-
-    @View
-    public String getInfoForTest(){
-        String info="";
-        if(lockedBalances.size()>0){
-            for(Address address:lockedBalances.keySet()){
-                info=info+"{address="+address.toString();
-                Map<Long,BigInteger> lockedBalance = lockedBalances.get(address);
-                if(lockedBalance!=null &&lockedBalance.size()>0){
-                    for(Long lockedTime:lockedBalance.keySet()){
-                        info+=" , {lockedTime="+lockedTime+" , lockedBalance="+lockedBalance.get(lockedTime).toString()+" }";
-                    }
-                }
-                info+=" },";
-            }
-        }else{
-            info="no data";
-        }
-
-        return info;
-
-    }
-
-
 }
