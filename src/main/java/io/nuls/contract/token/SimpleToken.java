@@ -83,6 +83,25 @@ public class SimpleToken implements Contract, Token {
         return true;
     }
 
+    /**
+     * 从指定地址批量转账
+     * @param from
+     * @param targets
+     * @param values
+     * @return
+     */
+    public boolean batchTransferFrom(@Required Address from, @Required String[] targets, @Required long[] values) {
+        checkBatchData(targets,values);
+        for (int i = 0; i < targets.length; i++) {
+            Address to = new Address(targets[i]);
+            BigInteger value = BigInteger.valueOf(values[i]);
+            subtractAllowed(from, Msg.sender(), value);
+            subtractBalance(from, value);
+            addBalance(to, value);
+            emit(new TransferEvent(from, to, value));
+        }
+        return true;
+    }
 
     @Override
     @View
@@ -126,6 +145,25 @@ public class SimpleToken implements Contract, Token {
         subtractBalance(Msg.sender(), value);
         addBalance(to, value);
         emit(new TransferEvent(Msg.sender(), to, value));
+        return true;
+    }
+
+
+    /**
+     * 批量转账
+     * @param targets
+     * @param values
+     * @return
+     */
+    public boolean batchTransfer(@Required String[] targets, @Required long[] values) {
+        checkBatchData(targets,values);
+        for (int i = 0; i < targets.length; i++) {
+            Address to = new Address(targets[i]);
+            BigInteger value = BigInteger.valueOf(values[i]);
+            subtractBalance(Msg.sender(), value);
+            addBalance(to, value);
+            emit(new TransferEvent(Msg.sender(), to, value));
+        }
         return true;
     }
 
@@ -284,5 +322,9 @@ public class SimpleToken implements Contract, Token {
         check(value1);
         check(value2);
         require(value1.compareTo(value2) >= 0, msg);
+    }
+
+    private void checkBatchData(String[] targets, long[] values){
+        require(targets.length==values.length,"The number of addresses and amounts for batch transfer should be the same");
     }
 }
