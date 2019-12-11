@@ -6,18 +6,18 @@
 
     <groupId>io.nuls.contract</groupId>
     <artifactId>nrc20-locked-token</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>test1</version>
 
     <dependencies>
         <dependency>
             <groupId>io.nuls.sdk</groupId>
             <artifactId>sdk-contract-vm</artifactId>
-            <version>2.0-beta4</version>
+            <version>LATEST</version>
         </dependency>
         <dependency>
             <groupId>io.nuls.v2</groupId>
             <artifactId>off-smartcontract-api</artifactId>
-            <version>0.12</version>
+            <version>LATEST</version>
         </dependency>
     </dependencies>
     <build>
@@ -49,7 +49,7 @@
                                 <!-- server port -->
                                 <argument>18081</argument>
                                 <!-- whether to launch the server -->
-                                <argument>true</argument>
+                                <argument>false</argument>
                             </arguments>
                         </configuration>
                     </execution>
